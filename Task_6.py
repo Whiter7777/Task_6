@@ -12,7 +12,6 @@ with open("Export.csv", "r") as a:
     for row in reader:
         dct[row[0]] = row[1:]
 
-asd = csv.reader("")
 
 def make_set(dct_name, index, column_name):
     """создание справочной таблицы"""
@@ -58,10 +57,10 @@ in_keys(markets, 8, countys)
 in_keys(markets, 9, states)
 in_keys(markets, 10, zips)
 
-for key, val in markets.items():
-    val.append("")
-    val.append("")
-    val.append("")
-
-markets['FMID'] = ['MarketName', 'Website', 'Facebook', 'Twitter', 'Youtube', 'OtherMedia', 'street', 'city', 'County', 'State', 'zip', 'coоrds', 'grade', 'comment']
+# for key, val in markets.items():
+#     val.append("")
+#     val.append("")
+#     val.append("")
+#
+# markets['FMID'] = ['MarketName', 'Website', 'Facebook', 'Twitter', 'Youtube', 'OtherMedia', 'street', 'city', 'County', 'State', 'zip', 'coоrds', 'grade', 'comment']
 
