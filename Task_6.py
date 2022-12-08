@@ -1,34 +1,49 @@
 import csv
+import re
+from func_for import make_set
+from func_for import in_keys
 
 dct = {}
+pattern = r"\"[^\"]*\""
+
+with open("Export.csv", "r") as inf:
+    for i in inf:
+        line = i.strip()
+        match = re.findall(pattern, line)
+        my_match = []
+        for i in match:
+            if "," in i:
+                j = i.replace(",", "$")
+                my_match.append(j)
+            else:
+                my_match.append(i)
+        for i in range(len(match)):
+            if match[i] in line:
+                line = line.replace(match[i], my_match[i])
+        line = line.split(",")
+        for i in range(len(line)):
+            if "$" in line[i]:
+                line[i] = line[i].replace("$", ",")
+        dct[line[0]] = line[1:]
 
 # with open("Export.csv", "r") as inf:
 #     for i in inf:
 #         line = i.strip().split(",")
 #         dct[line[0]] = line[1:]
 
-with open("Export.csv", "r") as a:
-    reader = csv.reader(a)
-    for row in reader:
-        dct[row[0]] = row[1:]
+# with open("Export.csv", "r") as a:
+#     reader = csv.reader(a)
+#     for row in reader:
+#         dct[row[0]] = row[1:]
 
-
-def make_set(dct_name, index, column_name):
-    """создание справочной таблицы"""
-    set_name = set()
-    for val in dct_name.values():
-        if val[index] != column_name:
-            set_name.add(val[index])
-        result = [[count, value] for count, value in enumerate(set_name, start=1)]
-    return result
-
+"""создание справочной таблицы"""
 streets = make_set(dct, 6, 'street')
 cities = make_set(dct, 7, 'city')
 countys = make_set(dct, 8, 'County')
 states = make_set(dct, 9, 'State')
 zips = make_set(dct, 10, 'zip')
 
-{coords_set = set()
+coords_set = set()
 for val in dct.values():
     coords_set.add((val[19], val[20]))
 
@@ -43,13 +58,6 @@ for key, val in dct.items():
     markets[key] = (val[0:11])
 
 """Заполняем таблицу ключами из сводных таблиц"""
-
-def in_keys(dct_name, index, lst):
-    for val in dct_name.values():
-        for i in lst:
-            if val[index] == i[1]:
-                val[index] = i[0]
-    return dct_name
 
 in_keys(markets, 6, streets)
 in_keys(markets, 7, cities)
