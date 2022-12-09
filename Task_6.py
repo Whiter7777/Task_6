@@ -1,15 +1,21 @@
+import pandas
 import csv
 import re
+
+import pandas as pd
+
 from func_for import make_set
 from func_for import in_keys
 from func_for import set_mark_prod
 
 dct = {}
 
-# with open("Export.csv", "r") as a:
-#     reader = csv.reader(a)
-#     for row in reader:
-#         dct[row[0]] = row[1:]
+df = pd.read_csv("Export.csv")
+
+with open("Export.csv", "r") as a:
+    reader = csv.reader(a)
+    for row in reader:
+        dct[row[0]] = row[1:]
 
 pattern = r"\"[^\"]*\""
 
