@@ -15,9 +15,9 @@ def in_keys(dct_name, index, lst):
                 val[index] = i[0]
     return dct_name
 
-def set_mark_prod(lst, dct, index, number):
+def set_mark_prod(lst, dct, index, number, table):
     """сопоставление market - product"""
     for key, val in dct.items():
         if val[index] == "Y":
-            lst.append([key, products[number][0]])
+            lst.append([key, table[number][0]])
     return lst
