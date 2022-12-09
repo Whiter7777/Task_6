@@ -106,8 +106,6 @@ for i in zips:
     if my_zip == i[1]:
         my_zip_index = i[0]
 
-
-
 """Поиск по 3-м параметрам"""
 for val in markets.values():
     if my_city_index == val[7] and my_state_index == val[9] and my_zip_index == val[10]:
