@@ -89,10 +89,10 @@ for i in range(len(products)):
     index += 1
     number += 1
 
-my_city = input("Введите название города: ")
-my_state = input("Введите название штата: ")
-my_zip = input("Введите индекс: ")
-my_round = input("Введите ограничение по удаленности: ")
+# my_city = input("Введите название города: ")
+# my_state = input("Введите название штата: ")
+# my_zip = input("Введите индекс: ")
+# my_round = input("Введите ограничение по удаленности: ")
 
 for i in cities:
     if my_city == i[1]:
