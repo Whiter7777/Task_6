@@ -89,10 +89,12 @@ for i in range(len(products)):
     index += 1
     number += 1
 
-# my_city = input("Введите название города: ")
-# my_state = input("Введите название штата: ")
-# my_zip = input("Введите индекс: ")
-# my_round = input("Введите ограничение по удаленности: ")
+
+my_city = input("Введите название города: ")
+my_state = input("Введите название штата: ")
+my_zip = input("Введите индекс: ")
+my_round = input("Введите ограничение по удаленности: ")
+
 
 for i in cities:
     if my_city == i[1]:
@@ -108,5 +110,4 @@ for i in zips:
 
 """Поиск по 3-м параметрам"""
 for val in markets.values():
-    if my_city_index == val[7] and my_state_index == val[9] and my_zip_index == val[10]:
         print(val[0])
