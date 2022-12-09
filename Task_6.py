@@ -2,8 +2,15 @@ import csv
 import re
 from func_for import make_set
 from func_for import in_keys
+from func_for import set_mark_prod
 
 dct = {}
+
+# with open("Export.csv", "r") as a:
+#     reader = csv.reader(a)
+#     for row in reader:
+#         dct[row[0]] = row[1:]
+
 pattern = r"\"[^\"]*\""
 
 with open("Export.csv", "r") as inf:
@@ -25,16 +32,6 @@ with open("Export.csv", "r") as inf:
             if "$" in line[i]:
                 line[i] = line[i].replace("$", ",")
         dct[line[0]] = line[1:]
-
-# with open("Export.csv", "r") as inf:
-#     for i in inf:
-#         line = i.strip().split(",")
-#         dct[line[0]] = line[1:]
-
-# with open("Export.csv", "r") as a:
-#     reader = csv.reader(a)
-#     for row in reader:
-#         dct[row[0]] = row[1:]
 
 """создание справочной таблицы"""
 streets = make_set(dct, 6, 'street')
@@ -65,10 +62,29 @@ in_keys(markets, 8, countys)
 in_keys(markets, 9, states)
 in_keys(markets, 10, zips)
 
-# for key, val in markets.items():
-#     val.append("")
-#     val.append("")
-#     val.append("")
-#
-# markets['FMID'] = ['MarketName', 'Website', 'Facebook', 'Twitter', 'Youtube', 'OtherMedia', 'street', 'city', 'County', 'State', 'zip', 'coоrds', 'grade', 'comment']
+for key, val in markets.items():
+    val.append("")
+    val.append("")
+    val.append("")
 
+"""Добавляем ключи координат"""
+for val in dct.values():
+    for k, v in coords.items():
+        if val[19] == v[0] and val[20] == v[1]:
+            val.append(k)
+
+for key, val in dct.items():
+    for k, v in markets.items():
+        if key == k:
+            v[11] = val[-1]
+
+markets['FMID'] = ['MarketName', 'Website', 'Facebook', 'Twitter', 'Youtube', 'OtherMedia', 'street', 'city', 'County', 'State', 'zip', 'coоrds', 'grade', 'comment']
+
+"""Таблица markets - products (многие ко многим)"""
+mark_prod = []
+index = 23
+number = 0
+for i in range(len(products)):
+    set_mark_prod(mark_prod, dct, index, number)
+    index += 1
+    number += 1
