@@ -1,22 +1,21 @@
-import pandas
+import pandas as pd
 import csv
 import re
 
-import pandas as pd
 
 from func_for import make_set
 from func_for import in_keys
 from func_for import set_mark_prod
+from file_io import write_in_csv, read_file_csv
+
+# df = pd.read_csv("Export.csv")
+#
+# with open("Export.csv", "r") as a:
+#     reader = csv.reader(a)
+#     for row in reader:
+#         dct[row[0]] = row[1:]
 
 dct = {}
-
-df = pd.read_csv("Export.csv")
-
-with open("Export.csv", "r") as a:
-    reader = csv.reader(a)
-    for row in reader:
-        dct[row[0]] = row[1:]
-
 pattern = r"\"[^\"]*\""
 
 with open("Export.csv", "r") as inf:
@@ -45,6 +44,12 @@ cities = make_set(dct, 7, 'city')
 countys = make_set(dct, 8, 'County')
 states = make_set(dct, 9, 'State')
 zips = make_set(dct, 10, 'zip')
+
+write_in_csv("streets", streets)
+lst = read_file_csv("streets.csv")
+
+for i in range(len(streets)):
+    print(streets[i] == lst[i])
 
 coords_set = set()
 for val in dct.values():
@@ -100,19 +105,19 @@ for i in range(len(products)):
 # my_zip = input("Введите индекс: ")
 # my_round = input("Введите ограничение по удаленности: ")
 
-for i in cities:
-    if my_city == i[1]:
-        my_city_index = i[0]
-
-for i in states:
-    if my_state == i[1]:
-        my_state_index = i[0]
-
-for i in zips:
-    if my_zip == i[1]:
-        my_zip_index = i[0]
-
-"""Поиск по 3-м параметрам"""
-for val in markets.values():
-    if my_city_index == val[7] and my_state_index == val[9] and my_zip_index == val[10]:
-        print(val[0])
+# for i in cities:
+#     if my_city == i[1]:
+#         my_city_index = i[0]
+#
+# for i in states:
+#     if my_state == i[1]:
+#         my_state_index = i[0]
+#
+# for i in zips:
+#     if my_zip == i[1]:
+#         my_zip_index = i[0]
+#
+# """Поиск по 3-м параметрам"""
+# for val in markets.values():
+#     if my_city_index == val[7] and my_state_index == val[9] and my_zip_index == val[10]:
+#         print(val[0])
