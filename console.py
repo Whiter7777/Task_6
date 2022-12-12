@@ -46,7 +46,7 @@ if Flag == True:
 
         elif view == "find_zip":
             my_zip = input("Введите индекс: ")
-            print("Дальность, в зоне которой нужно показывать рынки")
+            print("Дальность (миль), в зоне которой нужно показывать рынки")
             distance = check_number()
             new_decorator = decorator("Coords.json", distance)
             decorated_function = new_decorator(find_zip)

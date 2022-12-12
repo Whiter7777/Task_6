@@ -86,6 +86,7 @@ def show_markets(file_name):
     return lst
 
 def find_item(file_name, table_name, my_var, index):
+    """Поиск по списку из файла"""
     markets = read_json(file_name)
     params = read_file_csv(table_name)
     lst = []
@@ -102,6 +103,7 @@ def find_item(file_name, table_name, my_var, index):
     return lst
 
 def decorator(file_coords, distance = 30):
+    """Поиск с учетом дистанции"""
     def decorator_index(func):
         def wrapper(file_name, table_name, my_var, index):
             markets = read_json(file_name)
@@ -132,6 +134,7 @@ def decorator(file_coords, distance = 30):
 
 # @decorator("Coords.json")
 def find_zip(file_name, table_name, my_var, index):
+    """Поиск по индексу"""
     markets = read_json(file_name)
     params = read_file_csv(table_name)
     lst = []
