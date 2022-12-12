@@ -1,5 +1,5 @@
-from model import set_database, show_markets, find_item
-from check_params import check_yes_no
+from model import set_database, show_markets, find_item, find_zip, decorator
+from check_params import check_yes_no, check_number
 
 start = input("Здравствуйте! Хотите начать работу? (y/n): ")
 begin = check_yes_no(start)
@@ -44,13 +44,11 @@ if Flag == True:
                 print(i)
             view = input("Введите команду: ")
 
-        # elif view == "find_zip":
-        #
-        #
-        #
-        #
-        # else:
-
-    # elif view == "end":
-    #     print("Всего хорошего!")
-    #     Flag = False
+        elif view == "find_zip":
+            my_zip = input("Введите индекс: ")
+            print("Дальность, в зоне которой нужно показывать рынки")
+            distance = check_number()
+            new_decorator = decorator("Coords.json", distance)
+            decorated_function = new_decorator(find_zip)
+            result = decorated_function("Markets.json", "Zips.csv", my_zip, 10)
+            view = input("Введите команду: ")

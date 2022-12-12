@@ -1,5 +1,6 @@
 from file_io import read_main_file_csv, read_file_csv, read_json, write_in_csv, write_in_json
 from func_for import make_set, set_mark_prod, in_keys
+from haversine import haversine, Unit
 
 def set_database(mail_file_name: str):
     dct = read_main_file_csv(mail_file_name) #Читаем основную таблицу
@@ -23,7 +24,7 @@ def set_database(mail_file_name: str):
     for val in dct.values():
         coords_set.add((val[19], val[20]))
     coords = {count: value for count, value in enumerate(coords_set, start=1)} #Справочная словарь с координатами
-    write_in_json("Coords", coords) #Импорт справочного словаря в json
+    write_in_json("Coords.json", coords) #Импорт справочного словаря в json
 
     products = [[count, value] for count, value in enumerate(dct['FMID'][23:57], start=1)] #Справочная таблица с продуктами
     write_in_csv("Products", products)
@@ -100,6 +101,51 @@ def find_item(file_name, table_name, my_var, index):
             break
     return lst
 
+def decorator(file_coords, distance = 30):
+    def decorator_index(func):
+        def wrapper(file_name, table_name, my_var, index):
+            markets = read_json(file_name)
+            coords = read_json(file_coords)
+            lst_coords = []
+            lst_markets = []
+            lst = func(file_name, table_name, my_var, index)
+            for i in range(len(lst)):
+                if lst[0] == "Неверно введено значение, повторите вызов команды":
+                    return lst[0]
+                else:
+                    for key, val in coords.items():
+                        if int(key) == lst[0][1]:
+                            start_coords = val
+                            a = (float(start_coords[1]), float(start_coords[0]))
+                    for key, val in coords.items():
+                        if val[1] != "y"and val[1] != "":
+                            b = (float(val[1]), float(val[0]))
+                            if haversine(a, b, unit=Unit.MILES) <= distance:
+                                lst_coords.append(key)
+                    for val in markets.values():
+                        for i in lst_coords:
+                            if val[11] == int(i):
+                                lst_markets.append(val[0])
+            return lst_markets
+        return wrapper
+    return decorator_index
+
+# @decorator("Coords.json")
+def find_zip(file_name, table_name, my_var, index):
+    markets = read_json(file_name)
+    params = read_file_csv(table_name)
+    lst = []
+    for i in params:
+        if my_var == i[1]:
+            my_var_index = int(i[0])
+    for val in markets.values():
+        try:
+            if my_var_index == val[index]:
+                lst.append([val[0], val[11]])
+        except UnboundLocalError:
+            lst.append("Неверно введено значение, повторите вызов команды")
+            break
+    return lst
 
 
 
