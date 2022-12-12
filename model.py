@@ -76,4 +76,32 @@ def set_database(mail_file_name: str):
 
     write_in_csv("Mark_prod", mark_prod) #Импорт справочной таблицы в csv
 
+def show_markets(file_name):
+    """Просмотр рынков"""
+    lst = []
+    dct = read_json(file_name)
+    for val in dct.values():
+        lst.append([val[0], val[12], val[13]])
+    return lst
+
+def find_item(file_name, table_name, my_var, index):
+    markets = read_json(file_name)
+    params = read_file_csv(table_name)
+    lst = []
+    for i in params:
+        if my_var == i[1]:
+            my_var_index = int(i[0])
+    for val in markets.values():
+        try:
+            if my_var_index == val[index]:
+                lst.append(val[0])
+        except UnboundLocalError:
+            lst.append("Неверно введено значение, повторите вызов команды")
+            break
+    return lst
+
+
+
+
+
 
