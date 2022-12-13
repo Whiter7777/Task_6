@@ -113,7 +113,7 @@ def decorator(file_coords, distance = 30):
             lst = func(file_name, table_name, my_var, index)
             for i in range(len(lst)):
                 if lst[0] == "Неверно введено значение, повторите вызов команды":
-                    return lst[0]
+                    return lst
                 else:
                     for key, val in coords.items():
                         if int(key) == lst[0][1]:
@@ -150,29 +150,29 @@ def find_zip(file_name, table_name, my_var, index):
             break
     return lst
 
-def relations(file_name, table_name, index, name):
-    markets = read_json(file_name)
-    for val in markets.values():
-        if val[0] == name:
-            for i in table_name:
-                if val[index] == int(i[0]):
-                    return i[1:]
-
-def view_info(name):
-    view_lst = []
-    markets = read_json("Markets.json")
-    coords = read_json("Coords.json")
-    streets = read_file_csv("Streets.csv")
-    cities = read_file_csv("Cities.csv")
-    countys = read_file_csv("Countys.csv")
-    states = read_file_csv("States.csv")
-    zips = read_file_csv("Zips.csv")
-    products = read_file_csv("Products.csv")
-    for key, val in markets.items():
-        if val[0] == name:
-            view_lst.extend([key, val[0], val[1], val[2], val[3], val[4], val[5]])
-            view_lst.append(*relations("Markets.json", streets, 7, name))
-    return view_lst
+# def relations(file_name, table_name, index, name):
+#     markets = read_json(file_name)
+#     for val in markets.values():
+#         if val[0] == name:
+#             for i in table_name:
+#                 if val[index] == int(i[0]):
+#                     return i[1:]
+#
+# def view_info(name):
+#     view_lst = []
+#     markets = read_json("Markets.json")
+#     coords = read_json("Coords.json")
+#     streets = read_file_csv("Streets.csv")
+#     cities = read_file_csv("Cities.csv")
+#     countys = read_file_csv("Countys.csv")
+#     states = read_file_csv("States.csv")
+#     zips = read_file_csv("Zips.csv")
+#     products = read_file_csv("Products.csv")
+#     for key, val in markets.items():
+#         if val[0] == name:
+#             view_lst.extend([key, val[0], val[1], val[2], val[3], val[4], val[5]])
+#             view_lst.append(*relations("Markets.json", streets, 7, name))
+#     return view_lst
 
 
 
