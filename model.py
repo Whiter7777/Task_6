@@ -91,7 +91,7 @@ def find_item(file_name, table_name, my_var, index):
     params = read_file_csv(table_name)
     lst = []
     for i in params:
-        if my_var == i[1]:
+        if my_var.split(",") == i[1:]:
             my_var_index = int(i[0])
     for val in markets.values():
         try:
@@ -150,6 +150,29 @@ def find_zip(file_name, table_name, my_var, index):
             break
     return lst
 
+def relations(file_name, table_name, index, name):
+    markets = read_json(file_name)
+    for val in markets.values():
+        if val[0] == name:
+            for i in table_name:
+                if val[index] == int(i[0]):
+                    return i[1:]
+
+def view_info(name):
+    view_lst = []
+    markets = read_json("Markets.json")
+    coords = read_json("Coords.json")
+    streets = read_file_csv("Streets.csv")
+    cities = read_file_csv("Cities.csv")
+    countys = read_file_csv("Countys.csv")
+    states = read_file_csv("States.csv")
+    zips = read_file_csv("Zips.csv")
+    products = read_file_csv("Products.csv")
+    for key, val in markets.items():
+        if val[0] == name:
+            view_lst.extend([key, val[0], val[1], val[2], val[3], val[4], val[5]])
+            view_lst.append(*relations("Markets.json", streets, 7, name))
+    return view_lst
 
 
 

@@ -1,19 +1,22 @@
-import math as m
-from haversine import haversine, Unit
-
-a = (-77.189254, 40.201689)
-b = (-84.376724, 33.725504)
-
-print(haversine(a, b, unit=Unit.MILES))
-
-from model import set_database, show_markets, find_item, decorator, find_zip
-from check_params import check_yes_no
+from file_io import read_file_csv, read_json
+from model import relations
 
 
-my_zip = input("Введите индекс: ")
-new_decorator = decorator("Coords.json", 100)
-decorated_function = new_decorator(find_zip)
-result = decorated_function("Markets.json", "Zips.csv", my_zip, 10)
+def view_info(name):
+    view_lst = []
+    markets = read_json("Markets.json")
+    coords = read_json("Coords.json")
+    streets = read_file_csv("Streets.csv")
+    cities = read_file_csv("Cities.csv")
+    countys = read_file_csv("Countys.csv")
+    states = read_file_csv("States.csv")
+    zips = read_file_csv("Zips.csv")
+    products = read_file_csv("Products.csv")
+    for key, val in markets.items():
+        if val[0] == name:
+            view_lst.extend([key, val[0], val[1], val[2], val[3], val[4], val[5]])
+            view_lst.append(*relations("Markets.json", streets, 7, name))
+    return view_lst
 
-print(result)
 
+print(*view_info("Ames Main Street Farmers' Market"))

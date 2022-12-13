@@ -19,6 +19,11 @@ if Flag == True:
           "\nfind_state - поиск рынков по штату"
           "\nfind_zip - поиск рынков по индексу"
           "\nend - выход из программы")
+          # "\nmarket - просмотр полной информации о конкретном рынке"
+          # "\ninfo - вывод полной информации о рынках по предыдущему запросу"
+          # "\ngrade - оценить рынок"
+          # "\nnotice - написать рецензию")
+          #
 
     view = input("Введите команду: ")
 
@@ -51,4 +56,8 @@ if Flag == True:
             new_decorator = decorator("Coords.json", distance)
             decorated_function = new_decorator(find_zip)
             result = decorated_function("Markets.json", "Zips.csv", my_zip, 10)
+            for i in result:
+                print(i)
             view = input("Введите команду: ")
+
+        # elif view
