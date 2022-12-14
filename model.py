@@ -29,7 +29,7 @@ def set_database(mail_file_name: str):
     products = [[count, value] for count, value in enumerate(dct['FMID'][23:57], start=1)] #Справочная таблица с продуктами
     write_in_csv("Products", products)
 
-    grades = [[1, "*"], [2, "**"], [3, "***"], [4, "****"], [5, "******"]] #Справочная таблица оценок
+    grades = [[1, "*"], [2, "**"], [3, "***"], [4, "****"], [5, "*****"]] #Справочная таблица оценок
     write_in_csv("Grades", grades) #Импорт справочной таблицы в csv
 
     """Таблица markets"""
