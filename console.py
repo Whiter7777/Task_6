@@ -71,9 +71,12 @@ if Flag == True:
             view = input("Введите команду: ")
 
         elif view == "info":
-            for i in lst:
-                result = view_info(i)
-                print(*result)
+            try:
+                for i in lst:
+                    result = view_info(i)
+                    print(*result)
+            except NameError:
+                print("Запросов еще не было")
             view = input("Введите команду: ")
 
         elif view == "grade":
