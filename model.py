@@ -150,30 +150,68 @@ def find_zip(file_name, table_name, my_var, index):
             break
     return lst
 
-# def relations(file_name, table_name, index, name):
-#     markets = read_json(file_name)
-#     for val in markets.values():
-#         if val[0] == name:
-#             for i in table_name:
-#                 if val[index] == int(i[0]):
-#                     return i[1:]
-#
-# def view_info(name):
-#     view_lst = []
-#     markets = read_json("Markets.json")
-#     coords = read_json("Coords.json")
-#     streets = read_file_csv("Streets.csv")
-#     cities = read_file_csv("Cities.csv")
-#     countys = read_file_csv("Countys.csv")
-#     states = read_file_csv("States.csv")
-#     zips = read_file_csv("Zips.csv")
-#     products = read_file_csv("Products.csv")
-#     for key, val in markets.items():
-#         if val[0] == name:
-#             view_lst.extend([key, val[0], val[1], val[2], val[3], val[4], val[5]])
-#             view_lst.append(*relations("Markets.json", streets, 7, name))
-#     return view_lst
+def relations(file_name, table_name, index, name):
+    """Возвращение значения по ключу для списков"""
+    markets = read_json(file_name)
+    for val in markets.values():
+        if val[0] == name:
+            for i in table_name:
+                if val[index] == int(i[0]):
+                    return ",".join(i[1:])
 
+def set_mark_prod_dct(mark_prod, products):
+    """Возвращение значения по ключу для словаря из общей таблицы рынок-продукты"""
+    dct_mark_prod = {}
+    for i in mark_prod:
+        dct_mark_prod.setdefault(i[0], []).append(i[1])
+    for val in dct_mark_prod.values():
+        for i in range(len(val)):
+            for j in products:
+                if val[i] == j[0]:
+                    val[i]= j[1]
+    return dct_mark_prod
+
+def view_info(name):
+    """Сбор информации о рынке"""
+    view_lst = []
+    markets = read_json("Markets.json")
+    coords = read_json("Coords.json")
+    streets = read_file_csv("Streets.csv")
+    cities = read_file_csv("Cities.csv")
+    countys = read_file_csv("Countys.csv")
+    states = read_file_csv("States.csv")
+    zips = read_file_csv("Zips.csv")
+    grades = read_file_csv("Grades.csv")
+    products = read_file_csv("Products.csv")
+    mark_prod = read_file_csv("Mark_prod.csv")
+    dct_mark_prod = set_mark_prod_dct(mark_prod, products)
+    for key, val in markets.items():
+        if val[0] == name:
+            view_lst.extend([key, val[0], val[1], val[2], val[3], val[4], val[5]])
+            view_lst.append(relations("Markets.json", streets, 6, name))
+            view_lst.append(relations("Markets.json", cities, 7, name))
+            view_lst.append(relations("Markets.json", countys, 8, name))
+            view_lst.append(relations("Markets.json", states, 9, name))
+            view_lst.append(relations("Markets.json", zips, 10, name))
+    for key, val in markets.items():
+        if val[0] == name:
+            for k, v in coords.items():
+                if val[11] == int(k):
+                    view_lst.append(v[0])
+                    view_lst.append(v[1])
+    for key, val in markets.items():
+        if val[0] == name:
+            for k, v in dct_mark_prod.items():
+                if key == k:
+                    view_lst.extend(v)
+    for key, val in markets.items():
+        if val[0] == name:
+            view_lst.append(relations("Markets.json", grades, 12, name))
+            view_lst.append(val[13])
+    if len(view_lst) == 0:
+        return ["По данному рынку нет информации"]
+    else:
+        return view_lst
 
 
 

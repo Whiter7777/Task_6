@@ -1,5 +1,6 @@
 import re
 import json
+import pandas as pd
 
 def read_main_file_csv(file_name: str):
     """Чтение из основного файла csv"""
@@ -51,9 +52,44 @@ def read_json(name: str):
     with open(name, "r") as file_in:
         inf = json.load(file_in)
         if len(inf) != 0:
-            dict = inf
+            dct = inf
         else:
-            dict = {}
-    return dict
+            dct = {}
+    return dct
+
+def write_grade(market_name, grade, file_name = "Markets.json", grade_file_name = "Grades.csv"):
+    flag = False
+    with open(file_name, "r") as file_in:
+        inf = json.load(file_in)
+        grade_lst = read_file_csv(grade_file_name)
+        for key, val in inf.items():
+            if market_name == val[0]:
+                for i in grade_lst:
+                    if i[1] == grade:
+                        val[12] = int(i[0])
+                        flag = True
+    if flag == True:
+        with open(file_name, 'w') as outfile:
+            json.dump(inf, outfile, ensure_ascii=False, indent=2)
+        return "Оценка добавлена"
+    else:
+        return "Введено неверное значение, оценка не добавлена"
+
+
+def write_notice(market_name, notice, file_name = "Markets.json"):
+    flag = False
+    with open(file_name, "r") as file_in:
+        inf = json.load(file_in)
+        for key, val in inf.items():
+            if market_name == val[0]:
+                val[13] = notice
+                flag = True
+    if flag == True:
+        with open(file_name, 'w') as outfile:
+            json.dump(inf, outfile, ensure_ascii=False, indent=2)
+        return "Рецензия добавлена"
+    else:
+        return "Введено неверное название рынка, оценка не добавлена"
+
 
 
