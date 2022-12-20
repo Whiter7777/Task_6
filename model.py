@@ -93,6 +93,7 @@ def find_item(file_name, table_name, my_var, index):
     for i in params:
         if my_var.split(",") == i[1:]:
             my_var_index = int(i[0])
+
     for val in markets.values():
         try:
             if my_var_index == val[index]:
