@@ -33,7 +33,7 @@ if Flag == True:
         if view == 'show':
             lst = show_markets("Markets.json")
             for i in lst:
-                print(*i)
+                print(i)
             view = input("Введите команду: ")
 
         elif view == "find_city":

@@ -82,7 +82,7 @@ def show_markets(file_name):
     lst = []
     dct = read_json(file_name)
     for val in dct.values():
-        lst.append([val[0], val[12], val[13]])
+        lst.append(val[0]) #, val[12], val[13]])
     return lst
 
 def find_item(file_name, table_name, my_var, index):
