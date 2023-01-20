@@ -1,24 +1,35 @@
 from file_io import read_main_file_csv, read_file_csv, read_json, write_in_csv, write_in_json
 from func_for import make_set, set_mark_prod, in_keys
 from haversine import haversine, Unit
+import threading
 
 def set_database(mail_file_name: str):
     dct = read_main_file_csv(mail_file_name) #Читаем основную таблицу
 
     streets = make_set(dct, 6, 'street') #Справочная таблица улиц
-    write_in_csv("Streets", streets) #Импорт справочной таблицы в csv
+    #write_in_csv("Streets", streets) #Импорт справочной таблицы в csv
+    thr1 = threading.Thread(target=write_in_csv, args=("Streets", streets))
+    thr1.start()
 
     cities = make_set(dct, 7, 'city') #Справочная таблица городов
-    write_in_csv("Cities", cities) #Импорт справочной таблицы в csv
+    # write_in_csv("Cities", cities) #Импорт справочной таблицы в csv
+    thr2 = threading.Thread(target=write_in_csv, args=("Cities", cities))
+    thr2.start()
 
     countys = make_set(dct, 8, 'County') #Справочная талица округов
-    write_in_csv("Countys", countys) #Импорт справочной таблицы в csv
+    # write_in_csv("Countys", countys) #Импорт справочной таблицы в csv
+    thr3 = threading.Thread(target=write_in_csv, args=("Countys", countys))
+    thr3.start()
 
     states = make_set(dct, 9, 'State') #Справочная талица штатов
-    write_in_csv("States", states) #Импорт справочной таблицы в csv
+    # write_in_csv("States", states) #Импорт справочной таблицы в csv
+    thr4 = threading.Thread(target=write_in_csv, args=("States", states))
+    thr4.start()
 
     zips = make_set(dct, 10, 'zip') #Справочная талица индексов
-    write_in_csv("Zips", zips) #Импорт справочной таблицы в csv
+    # write_in_csv("Zips", zips) #Импорт справочной таблицы в csv
+    thr5 = threading.Thread(target=write_in_csv, args=("Zips", zips))
+    thr5.start()
 
     coords_set = set()
     for val in dct.values():
